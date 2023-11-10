@@ -1,4 +1,7 @@
 package br.com.nityananda.agenda.core.exceptions;
 
-public abstract class AgendaException extends Exception {
+public class AgendaException extends RuntimeException {
+    public AgendaException(String message) {
+        super(message);
+    }
 }

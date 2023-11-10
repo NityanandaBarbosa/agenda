@@ -8,6 +8,6 @@ import br.com.nityananda.agenda.associate.models.Associate;
 import java.util.List;
 
 public interface AssociateService {
-    Associate registeAssociate(AssociateRecordDto associateRecordDto) throws CpfAlreadyUsed, CpfInvalid;
+    Associate registeAssociate(AssociateRecordDto associateRecordDto);
     List<Associate> getAll();
 }

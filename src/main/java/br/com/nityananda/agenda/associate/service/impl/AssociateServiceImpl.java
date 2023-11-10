@@ -20,13 +20,13 @@ public class AssociateServiceImpl implements AssociateService {
     }
 
     @Override
-    public Associate registeAssociate(AssociateRecordDto associateRecordDto) throws CpfAlreadyUsed{
+    public Associate registeAssociate(AssociateRecordDto associateRecordDto){
         try{
             var user = new Associate();
             BeanUtils.copyProperties(associateRecordDto, user);
             return repository.save(user);
         }catch (DataIntegrityViolationException e){
-            throw new CpfAlreadyUsed();
+            throw new CpfAlreadyUsed("Cpf already in use");
         }
     }
 

@@ -30,17 +30,8 @@ public class AssociateController {
 
     @PostMapping()
     @Operation(summary = "Register a new associate")
-    public ResponseEntity<Object> registerAssociate(@RequestBody @Valid AssociateRecordDto associateRecordDto){
-        var error = new HashMap<String, String>();
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.registeAssociate(associateRecordDto));
-        }catch (CpfAlreadyUsed e){
-            error.put("message: ", "Cpf already in use");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-        }catch (CpfInvalid e){
-            error.put("message: ", "Cpf is invalid");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-        }
+    public ResponseEntity<Associate> registerAssociate(@RequestBody @Valid AssociateRecordDto associateRecordDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.registeAssociate(associateRecordDto));
 
     }
 
