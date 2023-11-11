@@ -18,7 +18,7 @@ public class ControllerExceptionHandler {
     }
     @ExceptionHandler(CpfInvalid.class)
     public ResponseEntity<HttpError> validation(CpfInvalid e, HttpServletRequest request){
-        HttpError err = new HttpError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+        HttpError err = new HttpError(HttpStatus.NOT_ACCEPTABLE.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(err);
     }
 }

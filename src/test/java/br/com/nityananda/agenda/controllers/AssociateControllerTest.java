@@ -2,6 +2,7 @@ package br.com.nityananda.agenda.controllers;
 
 import br.com.nityananda.agenda.dtos.AssociateRecordDto;
 import br.com.nityananda.agenda.exceptions.CpfAlreadyUsed;
+import br.com.nityananda.agenda.exceptions.CpfInvalid;
 import br.com.nityananda.agenda.models.Associate;
 import br.com.nityananda.agenda.service.AssociateService;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class AssociateControllerTest {
     @Test
     void registerAssociate() throws Exception {
         final Date birthdate = new Date(631152000000L);
-        AssociateRecordDto associateRecordDto = new AssociateRecordDto("Associate Name", "12345678901", birthdate);
+        AssociateRecordDto associateRecordDto = new AssociateRecordDto("Nityananda Barbosa", "12345678901", birthdate);
 
         String jsonRequest = "{\"name\":\"Nityananda Barbosa\", \"cpf\":\"12345678901\", \"birthdate\":\"1990-01-01\"}";
 
@@ -55,6 +56,28 @@ class AssociateControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Nityananda Barbosa"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cpf").value("12345678901"));
+    }
+
+    @Test
+    void registerAssociateThrowCpfInvalid() throws Exception {
+        final Date birthdate = new Date(631152000000L);
+        AssociateRecordDto associateRecordDto = new AssociateRecordDto("Associate Name", "12345678901", birthdate);
+
+        String jsonRequest = "{\"name\":\"Nityananda Barbosa\", \"cpf\":\"12345678901\", \"birthdate\":\"1990-01-01\"}";
+
+        Associate associate = new Associate();
+        BeanUtils.copyProperties(associateRecordDto, associate);
+        associate.setRegistration(UUID.randomUUID());
+
+        Mockito.when(associateService.registerAssociate(Mockito.any(AssociateRecordDto.class)))
+                .thenThrow(CpfInvalid.class);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/associate")
+                        .content(jsonRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotAcceptable());
     }
 
     @Test

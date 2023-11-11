@@ -2,8 +2,10 @@ package br.com.nityananda.agenda.services;
 
 import br.com.nityananda.agenda.dtos.AssociateRecordDto;
 import br.com.nityananda.agenda.exceptions.CpfAlreadyUsed;
+import br.com.nityananda.agenda.exceptions.CpfInvalid;
 import br.com.nityananda.agenda.models.Associate;
 import br.com.nityananda.agenda.repositories.AssociateRepository;
+import br.com.nityananda.agenda.service.ValidateCpfService;
 import br.com.nityananda.agenda.service.impl.AssociateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,9 @@ class AssociateServiceImplTest {
     @Mock
     private AssociateRepository associateRepository;
 
+    @Mock
+    private ValidateCpfService validateCpfService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -52,6 +57,15 @@ class AssociateServiceImplTest {
 
     @Test
     void registerAssociate_CpfAlreadyUsed() {
+        AssociateRecordDto associateRecordDto = new AssociateRecordDto("Associate Name", "12345678901", birthdate);
+
+        Mockito.when(validateCpfService.validate(any(String.class))).thenThrow(new CpfInvalid("Cpf Invalid"));
+
+        assertThrows(CpfInvalid.class, () -> associateService.registerAssociate(associateRecordDto));
+    }
+
+    @Test
+    void registerAssociate_CpfInvalid() {
         AssociateRecordDto associateRecordDto = new AssociateRecordDto("Associate Name", "12345678901", birthdate);
 
         Mockito.when(associateRepository.save(any(Associate.class))).thenThrow(new DataIntegrityViolationException(""));

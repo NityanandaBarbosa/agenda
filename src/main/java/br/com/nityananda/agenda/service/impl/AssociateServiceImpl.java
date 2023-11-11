@@ -5,6 +5,7 @@ import br.com.nityananda.agenda.exceptions.CpfAlreadyUsed;
 import br.com.nityananda.agenda.models.Associate;
 import br.com.nityananda.agenda.repositories.AssociateRepository;
 import br.com.nityananda.agenda.service.AssociateService;
+import br.com.nityananda.agenda.service.ValidateCpfService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,11 @@ import java.util.List;
 public class AssociateServiceImpl implements AssociateService {
     final AssociateRepository repository;
 
-    public AssociateServiceImpl(AssociateRepository repository) {
+    final ValidateCpfService validateCpfService;
+
+    public AssociateServiceImpl(AssociateRepository repository, ValidateCpfService validateCpfService) {
         this.repository = repository;
+        this.validateCpfService = validateCpfService;
     }
 
     @Override
@@ -24,6 +28,8 @@ public class AssociateServiceImpl implements AssociateService {
         try{
             var user = new Associate();
             BeanUtils.copyProperties(associateRecordDto, user);
+            user.setCpf(associateRecordDto.cpf().replaceAll("[^\\d]", ""));
+            validateCpfService.validate(user.getCpf());
             return repository.save(user);
         }catch (DataIntegrityViolationException e){
             throw new CpfAlreadyUsed("Cpf already in use");
