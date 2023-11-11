@@ -1,7 +1,8 @@
-package br.com.nityananda.agenda.associate.models;
+package br.com.nityananda.agenda.models;
 
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_ASSOCIATE")
 public class Associate implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -1,6 +1,4 @@
-package br.com.nityananda.agenda.associate.exceptions;
-
-import br.com.nityananda.agenda.core.exceptions.AgendaException;
+package br.com.nityananda.agenda.exceptions;
 
 public class CpfAlreadyUsed extends AgendaException {
     public CpfAlreadyUsed(String message) {

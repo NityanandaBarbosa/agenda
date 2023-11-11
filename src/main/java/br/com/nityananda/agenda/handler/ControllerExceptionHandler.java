@@ -1,8 +1,8 @@
-package br.com.nityananda.agenda.core.controllers.handler;
+package br.com.nityananda.agenda.handler;
 
-import br.com.nityananda.agenda.associate.exceptions.CpfAlreadyUsed;
-import br.com.nityananda.agenda.associate.exceptions.CpfInvalid;
-import br.com.nityananda.agenda.core.controllers.exception.HttpError;
+import br.com.nityananda.agenda.exceptions.CpfAlreadyUsed;
+import br.com.nityananda.agenda.exceptions.CpfInvalid;
+import br.com.nityananda.agenda.handler.exception.HttpError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class ControllerExceptionHandler {
     }
     @ExceptionHandler(CpfInvalid.class)
     public ResponseEntity<HttpError> validation(CpfInvalid e, HttpServletRequest request){
-        HttpError err = new HttpError(HttpStatus.NO_CONTENT.value(), e.getMessage());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(err);
+        HttpError err = new HttpError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 }

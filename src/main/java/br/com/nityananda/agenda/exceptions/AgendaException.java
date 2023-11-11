@@ -1,4 +1,4 @@
-package br.com.nityananda.agenda.core.exceptions;
+package br.com.nityananda.agenda.exceptions;
 
 public class AgendaException extends RuntimeException {
     public AgendaException(String message) {

@@ -1,4 +1,4 @@
-package br.com.nityananda.agenda.associate.dtos;
+package br.com.nityananda.agenda.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,21 +1,16 @@
-package br.com.nityananda.agenda.associate.controllers;
+package br.com.nityananda.agenda.controllers;
 
-import br.com.nityananda.agenda.associate.dtos.AssociateRecordDto;
-import br.com.nityananda.agenda.associate.exceptions.CpfAlreadyUsed;
-import br.com.nityananda.agenda.associate.exceptions.CpfInvalid;
-import br.com.nityananda.agenda.associate.models.Associate;
-import br.com.nityananda.agenda.associate.repositories.AssociateRepository;
-import br.com.nityananda.agenda.associate.service.AssociateService;
+import br.com.nityananda.agenda.dtos.AssociateRecordDto;
+import br.com.nityananda.agenda.models.Associate;
+import br.com.nityananda.agenda.service.AssociateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 
 @RestController()
@@ -31,8 +26,7 @@ public class AssociateController {
     @PostMapping()
     @Operation(summary = "Register a new associate")
     public ResponseEntity<Associate> registerAssociate(@RequestBody @Valid AssociateRecordDto associateRecordDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.registeAssociate(associateRecordDto));
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.registerAssociate(associateRecordDto));
     }
 
     @GetMapping(value = "/all")

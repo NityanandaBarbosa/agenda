@@ -1,4 +1,4 @@
-package br.com.nityananda.agenda.core.controllers.exception;
+package br.com.nityananda.agenda.handler.exception;
 
 import java.io.Serial;
 import java.io.Serializable;

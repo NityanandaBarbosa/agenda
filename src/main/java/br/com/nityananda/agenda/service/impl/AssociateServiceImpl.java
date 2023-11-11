@@ -1,10 +1,10 @@
-package br.com.nityananda.agenda.associate.service.impl;
+package br.com.nityananda.agenda.service.impl;
 
-import br.com.nityananda.agenda.associate.dtos.AssociateRecordDto;
-import br.com.nityananda.agenda.associate.exceptions.CpfAlreadyUsed;
-import br.com.nityananda.agenda.associate.models.Associate;
-import br.com.nityananda.agenda.associate.repositories.AssociateRepository;
-import br.com.nityananda.agenda.associate.service.AssociateService;
+import br.com.nityananda.agenda.dtos.AssociateRecordDto;
+import br.com.nityananda.agenda.exceptions.CpfAlreadyUsed;
+import br.com.nityananda.agenda.models.Associate;
+import br.com.nityananda.agenda.repositories.AssociateRepository;
+import br.com.nityananda.agenda.service.AssociateService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class AssociateServiceImpl implements AssociateService {
     }
 
     @Override
-    public Associate registeAssociate(AssociateRecordDto associateRecordDto){
+    public Associate registerAssociate(AssociateRecordDto associateRecordDto){
         try{
             var user = new Associate();
             BeanUtils.copyProperties(associateRecordDto, user);
