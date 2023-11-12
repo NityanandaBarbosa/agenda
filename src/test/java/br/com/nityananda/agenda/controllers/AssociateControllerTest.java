@@ -123,8 +123,8 @@ class AssociateControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2)) // Verifica se há dois elementos no array
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Associate 1")) // Verifica o nome do primeiro associado
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Associate 2")); // Verifica o nome do segundo associado
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Associate 1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Associate 2"));
     }
 }
