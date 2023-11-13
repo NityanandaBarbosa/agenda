@@ -1,9 +1,6 @@
 package br.com.nityananda.agenda.handler;
 
-import br.com.nityananda.agenda.exceptions.AgendaAlreadyUsedInSession;
-import br.com.nityananda.agenda.exceptions.AgendaNotFound;
-import br.com.nityananda.agenda.exceptions.CpfAlreadyUsed;
-import br.com.nityananda.agenda.exceptions.CpfInvalid;
+import br.com.nityananda.agenda.exceptions.*;
 import br.com.nityananda.agenda.handler.exception.HttpError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -41,6 +38,30 @@ public class ControllerExceptionHandler {
     public ResponseEntity<HttpError> validation(IllegalArgumentException e, HttpServletRequest request){
         HttpError err = new HttpError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(AlreadyVoted.class)
+    public ResponseEntity<HttpError> validation(AlreadyVoted e, HttpServletRequest request){
+        HttpError err = new HttpError(HttpStatus.CONFLICT.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
+    }
+
+    @ExceptionHandler(AssociateNotFound.class)
+    public ResponseEntity<HttpError> validation(AssociateNotFound e, HttpServletRequest request){
+        HttpError err = new HttpError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(SessionNotFound.class)
+    public ResponseEntity<HttpError> validation(SessionNotFound e, HttpServletRequest request){
+        HttpError err = new HttpError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(SessionExpired.class)
+    public ResponseEntity<HttpError> validation(SessionExpired e, HttpServletRequest request){
+        HttpError err = new HttpError(HttpStatus.NOT_ACCEPTABLE.value(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(err);
     }
 
 }

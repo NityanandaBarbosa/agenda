@@ -31,4 +31,8 @@ public class  SessionGetDto {
             return SessionStatus.FINISHED;
         }
     }
+
+    public SessionStatus getStatus(){
+        return session_status;
+    }
 }

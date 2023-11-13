@@ -1,5 +1,6 @@
 package br.com.nityananda.agenda.models;
 
+import br.com.nityananda.agenda.enums.VoteOptions;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,6 +20,9 @@ public class Vote implements Serializable {
     @ManyToOne
     @JoinColumn(name = "associate_id", referencedColumnName = "registration")
     private Associate associate;
+
+    @Column(name = "vote", nullable = false)
+    private VoteOptions vote;
 
 
     public UUID getId() {
@@ -43,5 +47,13 @@ public class Vote implements Serializable {
 
     public void setAssociate(Associate associate) {
         this.associate = associate;
+    }
+
+    public VoteOptions getVote() {
+        return vote;
+    }
+
+    public void setVote(VoteOptions vote) {
+        this.vote = vote;
     }
 }

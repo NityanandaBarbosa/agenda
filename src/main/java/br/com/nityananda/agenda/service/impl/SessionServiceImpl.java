@@ -8,7 +8,6 @@ import br.com.nityananda.agenda.models.Session;
 import br.com.nityananda.agenda.repositories.AgendaRepository;
 import br.com.nityananda.agenda.repositories.SessionRepository;
 import br.com.nityananda.agenda.service.SessionService;
-import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
