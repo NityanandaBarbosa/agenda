@@ -1,5 +1,6 @@
 package br.com.nityananda.agenda.service.impl;
 
+import br.com.nityananda.agenda.dtos.SessionGetDto;
 import br.com.nityananda.agenda.dtos.SessionRecordDto;
 import br.com.nityananda.agenda.exceptions.AgendaAlreadyUsedInSession;
 import br.com.nityananda.agenda.exceptions.AgendaNotFound;
@@ -7,10 +8,10 @@ import br.com.nityananda.agenda.models.Session;
 import br.com.nityananda.agenda.repositories.AgendaRepository;
 import br.com.nityananda.agenda.repositories.SessionRepository;
 import br.com.nityananda.agenda.service.SessionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class SessionServiceImpl implements SessionService {
 
     final
     @Override
-    public Session registerSession(SessionRecordDto sessionRecordDto) {
+    public SessionGetDto registerSession(SessionRecordDto sessionRecordDto) {
         try{
             var agenda = agendaRepository.findById(UUID.fromString(sessionRecordDto.agenda_id()));
             if(agenda.isEmpty()){
@@ -40,7 +41,8 @@ public class SessionServiceImpl implements SessionService {
             var endSession = sessionRecordDto.end_session();
             session.setEndSession(endSession != null ? endSession : session.getBeginSession().plusMinutes(1));
 
-            return repository.save(session);
+            var savedSession = repository.save(session);
+            return savedSession.toGetDto();
         }catch (DataIntegrityViolationException e){
             throw new AgendaAlreadyUsedInSession("Agenda already used in session");
         }
@@ -53,7 +55,10 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<Session> getAll() {
-        return repository.findAll();
+    public List<SessionGetDto> getAll() {
+        var sessions = repository.findAll();
+        return sessions.stream().map(session -> {;
+            return session.toGetDto();
+        }).toList();
     }
 }

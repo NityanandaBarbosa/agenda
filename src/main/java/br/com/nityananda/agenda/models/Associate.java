@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +27,9 @@ public class Associate implements Serializable {
 
     @Column(name = "birthdate", nullable = false)
     private Date birthdate;
+
+    @OneToMany(mappedBy = "associate")
+    private Set<Vote> votes = new HashSet<>();
 
     public UUID getRegistration() {
         return registration;
@@ -56,5 +61,13 @@ public class Associate implements Serializable {
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public Set<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
     }
 }

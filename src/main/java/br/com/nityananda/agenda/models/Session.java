@@ -1,11 +1,14 @@
 package br.com.nityananda.agenda.models;
 
+import br.com.nityananda.agenda.dtos.SessionGetDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +34,9 @@ public class Session implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "end_session", nullable = false)
     private LocalDateTime endSession;
+
+    @OneToMany(mappedBy = "session")
+    private Set<Vote> votes = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -58,5 +64,22 @@ public class Session implements Serializable {
 
     public void setEndSession(LocalDateTime endSession) {
         this.endSession = endSession;
+    }
+
+    public Set<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
+    }
+
+    public SessionGetDto toGetDto(){
+        return new SessionGetDto(
+            this.getId().toString(),
+            this.getAgenda(),
+            this.getBeginSession(),
+            this.getEndSession()
+        );
     }
 }

@@ -1,6 +1,7 @@
 package br.com.nityananda.agenda.controllers;
 
 import br.com.nityananda.agenda.dtos.AgendaRecordDto;
+import br.com.nityananda.agenda.dtos.SessionGetDto;
 import br.com.nityananda.agenda.dtos.SessionRecordDto;
 import br.com.nityananda.agenda.models.Agenda;
 import br.com.nityananda.agenda.models.Session;
@@ -27,7 +28,7 @@ public class SessionController {
 
     @PostMapping()
     @Operation(summary = "Register a new session")
-    public ResponseEntity<Session> registerAssociate(@RequestBody @Valid SessionRecordDto sessionRecordDto){
+    public ResponseEntity<SessionGetDto> registerAssociate(@RequestBody @Valid SessionRecordDto sessionRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.registerSession(sessionRecordDto));
     }
 
@@ -40,7 +41,7 @@ public class SessionController {
 
     @GetMapping(value = "/all")
     @Operation(summary = "Get all sessions")
-    public ResponseEntity<List<Session>> getAll(){
+    public ResponseEntity<List<SessionGetDto>> getAll(){
         ;
         return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
     }
