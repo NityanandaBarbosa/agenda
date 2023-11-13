@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import java.time.LocalDateTime;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class  SessionGetDto {
+public class  SessionResponseDto {
     final String id;
     final Agenda agenda;
     final LocalDateTime begin_session;
     final LocalDateTime end_session;
     final SessionStatus session_status;
 
-    public SessionGetDto(String id, Agenda agenda, LocalDateTime beginSession, LocalDateTime endSession) {
+    public SessionResponseDto(String id, Agenda agenda, LocalDateTime beginSession, LocalDateTime endSession) {
         this.id = id;
         this.agenda = agenda;
         this.begin_session = beginSession;

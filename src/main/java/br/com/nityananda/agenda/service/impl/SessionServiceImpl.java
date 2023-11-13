@@ -1,7 +1,7 @@
 package br.com.nityananda.agenda.service.impl;
 
-import br.com.nityananda.agenda.dtos.SessionGetDto;
 import br.com.nityananda.agenda.dtos.SessionRecordDto;
+import br.com.nityananda.agenda.dtos.SessionResponseDto;
 import br.com.nityananda.agenda.exceptions.AgendaAlreadyUsedInSession;
 import br.com.nityananda.agenda.exceptions.AgendaNotFound;
 import br.com.nityananda.agenda.models.Session;
@@ -27,7 +27,7 @@ public class SessionServiceImpl implements SessionService {
 
     final
     @Override
-    public SessionGetDto registerSession(SessionRecordDto sessionRecordDto) {
+    public SessionResponseDto registerSession(SessionRecordDto sessionRecordDto) {
         try{
             var agenda = agendaRepository.findById(UUID.fromString(sessionRecordDto.agenda_id()));
             if(agenda.isEmpty()){
@@ -54,7 +54,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<SessionGetDto> getAll() {
+    public List<SessionResponseDto> getAll() {
         var sessions = repository.findAll();
         return sessions.stream().map(session -> {;
             return session.toGetDto();

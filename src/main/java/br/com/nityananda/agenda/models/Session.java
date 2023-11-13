@@ -1,6 +1,6 @@
 package br.com.nityananda.agenda.models;
 
-import br.com.nityananda.agenda.dtos.SessionGetDto;
+import br.com.nityananda.agenda.dtos.SessionResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -74,8 +74,8 @@ public class Session implements Serializable {
         this.votes = votes;
     }
 
-    public SessionGetDto toGetDto(){
-        return new SessionGetDto(
+    public SessionResponseDto toGetDto(){
+        return new SessionResponseDto(
             this.getId().toString(),
             this.getAgenda(),
             this.getBeginSession(),

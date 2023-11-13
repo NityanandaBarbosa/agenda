@@ -1,11 +1,10 @@
 package br.com.nityananda.agenda.service.impl;
 
 import br.com.nityananda.agenda.dtos.VoteRecordDto;
+import br.com.nityananda.agenda.dtos.VotingCountingResponseDto;
 import br.com.nityananda.agenda.enums.SessionStatus;
-import br.com.nityananda.agenda.exceptions.AlreadyVoted;
-import br.com.nityananda.agenda.exceptions.AssociateNotFound;
-import br.com.nityananda.agenda.exceptions.SessionExpired;
-import br.com.nityananda.agenda.exceptions.SessionNotFound;
+import br.com.nityananda.agenda.enums.VoteOptions;
+import br.com.nityananda.agenda.exceptions.*;
 import br.com.nityananda.agenda.models.Vote;
 import br.com.nityananda.agenda.repositories.AssociateRepository;
 import br.com.nityananda.agenda.repositories.SessionRepository;
@@ -41,8 +40,8 @@ public class VoteServiceImpl implements VoteService {
         var _sessionDto = _session.toGetDto();
         if(_sessionDto.getStatus() == SessionStatus.FINISHED) throw new SessionExpired("The session already finished");
 
-        var voted = repository.findByAssociateAndSession(associate, _session);
-        if(voted != null) throw new AlreadyVoted("Associate already voted to this session");
+       var voted = repository.findByAssociateAndSession(associate, _session);
+       if(voted != null) throw new AlreadyVoted("Associate already voted to this session");
 
         var vote = new Vote();
         vote.setAssociate(associate);
@@ -50,5 +49,22 @@ public class VoteServiceImpl implements VoteService {
         vote.setVote(voteRecordDto.vote_option());
 
         return repository.save(vote);
+    }
+
+    @Override
+    public VotingCountingResponseDto voteCounting(String sessionId) {
+        var sessionOptional = sessionRepository.findById(UUID.fromString(sessionId ));
+        if(sessionOptional.isEmpty()) throw new SessionNotFound("Session not found");
+
+        var _session = sessionOptional.get();
+        var _sessionDto = _session.toGetDto();
+        if(_sessionDto.getStatus() == SessionStatus.OPEN) throw new SessionNotExpired("Not allowed to counting, because the session is not finished yet");
+
+        var votes = repository.findAllBySession(_session);
+        var noVotes = votes.stream().map(vote -> vote.getVote() == VoteOptions.No).toList().size();
+        var yesVotes = votes.stream().map(vote -> vote.getVote() == VoteOptions.Yes).toList().size();
+
+
+        return new VotingCountingResponseDto(yesVotes, noVotes);
     }
 }

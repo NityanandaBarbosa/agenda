@@ -1,10 +1,8 @@
 package br.com.nityananda.agenda.controllers;
 
-import br.com.nityananda.agenda.dtos.SessionGetDto;
-import br.com.nityananda.agenda.dtos.SessionRecordDto;
 import br.com.nityananda.agenda.dtos.VoteRecordDto;
+import br.com.nityananda.agenda.dtos.VotingCountingResponseDto;
 import br.com.nityananda.agenda.models.Vote;
-import br.com.nityananda.agenda.service.SessionService;
 import br.com.nityananda.agenda.service.VoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,17 +29,10 @@ public class VoteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.submitVote(VoteRecordDto));
     }
 
-//    @DeleteMapping(value = "{id}")
-//    @Operation(summary = "Delete a session")
-//    public ResponseEntity<Void> deleteAgenda(@PathVariable String id){
-//        service.deleteSession(id);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-//
-//    @GetMapping(value = "/all")
-//    @Operation(summary = "Get all sessions")
-//    public ResponseEntity<List<SessionGetDto>> getAll(){
-//        ;
-//        return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
-//    }
+
+    @GetMapping(value = "/{session_id}")
+    @Operation(summary = "Get a session votes")
+    public ResponseEntity<VotingCountingResponseDto> getSessionVotes(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.voteCounting(id));
+    }
 }
