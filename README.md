@@ -36,17 +36,17 @@ Basically what you should do, now is open AgendaApplication.java and  then execu
 ##### 2 - Documentation | Test endpoints
 Access Swagger(http://localhost:8080/swagger-ui.html) to test th endpoints
 ##### The application was divided into 4:
-Associates: registering a member is necessary to send the name, valid CPF and date of birth (/associate | POST)
+- Associates: registering a member is necessary to send the name, valid CPF and date of birth (/associate | POST)
 
-Agenda: To create an agenda, you only need to enter a title and a description. (/agenda | POST)
+- Agenda: To create an agenda, you only need to enter a title and a description. (/agenda | POST)<br />
 
-###### With the agenda created, we can create a session so that members can vote.
+With the agenda created, we can create a session so that members can vote.
 
-Session: to create an session, you must enter the id of an agenda to be voted on, and the session's closing date and time. The session's start date is the same as its creation. (/session | POST)
+- Session: to create an session, you must enter the id of an agenda to be voted on, and the session's closing date and time. The session's start date is the same as its creation. (/session | POST)<br />
 Note: An agenda can only be linked to one session.
 
-Vote: To cast a vote, you must enter the member ID and session ID and your vote (Yes or No). (/vote | Post)
-After the session is over, it is possible to count votes. (/vote/{session_id} | GET)
+- Vote: To cast a vote, you must enter the member ID and session ID and your vote (Yes or No). (/vote | Post)<br />
+After the session is FINISHED, it is possible to count votes. (/vote/{session_id} | GET)
 
 ## Stay in touch
 
