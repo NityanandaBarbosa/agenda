@@ -27,12 +27,6 @@ public class AgendaServiceImpl implements AgendaService {
     }
 
     @Override
-    public void deleteAgenda(String uuid) {
-        var agenda = repository.getReferenceById(UUID.fromString(uuid));
-        repository.delete(agenda);
-    }
-
-    @Override
     public List<Agenda> getAll() {
         return repository.findAll();
     }

@@ -37,17 +37,25 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public Vote submitVote(VoteRecordDto voteRecordDto) {
         var associate = associateRepository.findByCpf(voteRecordDto.cpf());
-        if(associate == null) throw new AssociateNotFound("Associate not found");
+        if(associate == null) {
+            throw new AssociateNotFound("Associate not found");
+        }
 
         var sessionOptional = sessionRepository.findById(UUID.fromString(voteRecordDto.session_id()));
-        if(sessionOptional.isEmpty()) throw new SessionNotFound("Session not found");
+        if(sessionOptional.isEmpty()) {
+            throw new SessionNotFound("Session not found");
+        }
 
         var _session = sessionOptional.get();
         var _sessionDto = _session.toGetDto();
-        if(_sessionDto.getSession_status() == SessionStatus.FINISHED) throw new SessionExpired("The session already finished");
+        if(_sessionDto.getSession_status() == SessionStatus.FINISHED) {
+            throw new SessionExpired("The session already finished");
+        }
 
-       var voted = repository.findByAssociateAndSession(associate, _session);
-       if(voted != null) throw new AlreadyVoted("Associate already voted to this session");
+        var voted = repository.findByAssociateAndSession(associate, _session);
+        if(voted != null) {
+            throw new AlreadyVoted("Associate already voted to this session");
+        }
 
         var vote = new Vote();
         vote.setAssociate(associate);
@@ -64,7 +72,9 @@ public class VoteServiceImpl implements VoteService {
 
         var _session = sessionOptional.get();
         var _sessionDto = _session.toGetDto();
-        if(_sessionDto.getSession_status() == SessionStatus.OPEN) throw new SessionNotExpired("Not allowed to counting, because the session is not finished yet");
+        if(_sessionDto.getSession_status() == SessionStatus.OPEN) {
+            throw new SessionNotExpired("Not allowed to counting, because the session is not finished yet");
+        }
 
         var votes = repository.findAllBySession(_session);
         var noVotes = votes.stream().filter(vote -> vote.getVote() == VoteOptions.No).toList();

@@ -9,6 +9,5 @@ import java.util.List;
 @Service
 public interface SessionService {
     SessionResponseDto registerSession(SessionRecordDto sessionRecordDto);
-    void deleteSession(String uuid);
     List<SessionResponseDto> getAll();
 }

@@ -31,13 +31,6 @@ public class AgendaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.registerAgenda(agendaRecordDto));
     }
 
-    @DeleteMapping(value = "{id}")
-    @Operation(summary = "Delete a agenda")
-    public ResponseEntity<Void> deleteAgenda(@PathVariable String id){
-        service.deleteAgenda(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
     @GetMapping(value = "/all")
     @Operation(summary = "Get all agendas")
     public ResponseEntity<List<Agenda>> getAll(){

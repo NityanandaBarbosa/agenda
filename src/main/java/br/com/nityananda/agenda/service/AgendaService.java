@@ -9,6 +9,5 @@ import java.util.List;
 @Service
 public interface AgendaService {
     Agenda registerAgenda(AgendaRecordDto agendaRecordDto);
-    void deleteAgenda(String uuid);
     List<Agenda> getAll();
 }

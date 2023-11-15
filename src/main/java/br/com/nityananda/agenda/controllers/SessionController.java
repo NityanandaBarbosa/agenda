@@ -29,13 +29,6 @@ public class SessionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.registerSession(sessionRecordDto));
     }
 
-    @DeleteMapping(value = "{id}")
-    @Operation(summary = "Delete a session")
-    public ResponseEntity<Void> deleteAgenda(@PathVariable String id){
-        service.deleteSession(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
     @GetMapping(value = "/all")
     @Operation(summary = "Get all sessions")
     public ResponseEntity<List<SessionResponseDto>> getAll(){

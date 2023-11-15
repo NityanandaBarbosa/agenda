@@ -48,12 +48,6 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void deleteSession(String uuid) {
-        var agenda = repository.getReferenceById(UUID.fromString(uuid));
-        repository.delete(agenda);
-    }
-
-    @Override
     public List<SessionResponseDto> getAll() {
         var sessions = repository.findAll();
         return sessions.stream().map(session -> {;

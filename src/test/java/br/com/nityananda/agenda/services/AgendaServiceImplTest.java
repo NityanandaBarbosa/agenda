@@ -53,11 +53,6 @@ public class AgendaServiceImplTest {
         assertEquals(expectedAgenda, actualAgenda);
     }
 
-    @Test
-    void deleteAgenda_Success() {
-        var uuid = UUID.randomUUID().toString();
-        assertDoesNotThrow(() -> agendaService.deleteAgenda(uuid));
-    }
 
     @Test
     void getAllAgenda_Success() {
