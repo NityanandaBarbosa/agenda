@@ -14,6 +14,10 @@ public class  SessionResponseDto {
     final LocalDateTime end_session;
     final SessionStatus session_status;
 
+    public SessionStatus getSession_status() {
+        return session_status;
+    }
+
     public SessionResponseDto(String id, Agenda agenda, LocalDateTime beginSession, LocalDateTime endSession) {
         this.id = id;
         this.agenda = agenda;
@@ -30,9 +34,5 @@ public class  SessionResponseDto {
         } else {
             return SessionStatus.FINISHED;
         }
-    }
-
-    public SessionStatus getStatus(){
-        return session_status;
     }
 }

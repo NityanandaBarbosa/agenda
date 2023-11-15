@@ -12,6 +12,7 @@ import br.com.nityananda.agenda.repositories.VoteRepository;
 import br.com.nityananda.agenda.service.VoteService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,6 +30,11 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
+    public List<Vote> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
     public Vote submitVote(VoteRecordDto voteRecordDto) {
         var associate = associateRepository.findByCpf(voteRecordDto.cpf());
         if(associate == null) throw new AssociateNotFound("Associate not found");
@@ -38,7 +44,7 @@ public class VoteServiceImpl implements VoteService {
 
         var _session = sessionOptional.get();
         var _sessionDto = _session.toGetDto();
-        if(_sessionDto.getStatus() == SessionStatus.FINISHED) throw new SessionExpired("The session already finished");
+        if(_sessionDto.getSession_status() == SessionStatus.FINISHED) throw new SessionExpired("The session already finished");
 
        var voted = repository.findByAssociateAndSession(associate, _session);
        if(voted != null) throw new AlreadyVoted("Associate already voted to this session");
@@ -58,13 +64,12 @@ public class VoteServiceImpl implements VoteService {
 
         var _session = sessionOptional.get();
         var _sessionDto = _session.toGetDto();
-        if(_sessionDto.getStatus() == SessionStatus.OPEN) throw new SessionNotExpired("Not allowed to counting, because the session is not finished yet");
+        if(_sessionDto.getSession_status() == SessionStatus.OPEN) throw new SessionNotExpired("Not allowed to counting, because the session is not finished yet");
 
         var votes = repository.findAllBySession(_session);
-        var noVotes = votes.stream().map(vote -> vote.getVote() == VoteOptions.No).toList().size();
-        var yesVotes = votes.stream().map(vote -> vote.getVote() == VoteOptions.Yes).toList().size();
+        var noVotes = votes.stream().filter(vote -> vote.getVote() == VoteOptions.No).toList();
+        var yesVotes = votes.stream().filter(vote -> vote.getVote() == VoteOptions.Yes).toList();
 
-
-        return new VotingCountingResponseDto(yesVotes, noVotes);
+        return new VotingCountingResponseDto(yesVotes.size(), noVotes.size());
     }
 }

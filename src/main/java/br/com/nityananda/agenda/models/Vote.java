@@ -17,13 +17,12 @@ public class Vote implements Serializable {
     @JoinColumn(name = "session_id", referencedColumnName = "id")
     private Session session;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE})
     @JoinColumn(name = "associate_id", referencedColumnName = "registration")
     private Associate associate;
 
     @Column(name = "vote", nullable = false)
     private VoteOptions vote;
-
 
     public UUID getId() {
         return id;

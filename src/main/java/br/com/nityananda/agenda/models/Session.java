@@ -35,9 +35,6 @@ public class Session implements Serializable {
     @Column(name = "end_session", nullable = false)
     private LocalDateTime endSession;
 
-    @OneToMany(mappedBy = "session")
-    private Set<Vote> votes = new HashSet<>();
-
     public UUID getId() {
         return id;
     }
@@ -64,14 +61,6 @@ public class Session implements Serializable {
 
     public void setEndSession(LocalDateTime endSession) {
         this.endSession = endSession;
-    }
-
-    public Set<Vote> getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Set<Vote> votes) {
-        this.votes = votes;
     }
 
     public SessionResponseDto toGetDto(){

@@ -1,8 +1,5 @@
 package br.com.nityananda.agenda.dtos;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class VotingCountingResponseDto {
 
     final int num_yes;
@@ -12,4 +9,14 @@ public class VotingCountingResponseDto {
         num_yes = numYes;
         num_no = numNo;
     }
+
+    public int getNum_yes() {
+        return num_yes;
+    }
+
+    public int getNum_no() {
+        return num_no;
+    }
+
+
 }

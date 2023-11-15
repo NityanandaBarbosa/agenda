@@ -25,14 +25,20 @@ public class VoteController {
 
     @PostMapping()
     @Operation(summary = "Register a new vote")
-    public ResponseEntity<Vote> submitVote(@RequestBody @Valid VoteRecordDto VoteRecordDto){
+    public ResponseEntity<Vote> submitVote(@RequestBody VoteRecordDto VoteRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.submitVote(VoteRecordDto));
+    }
+
+    @GetMapping()
+    @Operation(summary = "Get all votes votes")
+    public ResponseEntity<List<Vote>> getSessionVotes(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
     }
 
 
     @GetMapping(value = "/{session_id}")
     @Operation(summary = "Get a session votes")
-    public ResponseEntity<VotingCountingResponseDto> getSessionVotes(@PathVariable String id){
-        return ResponseEntity.status(HttpStatus.OK).body(service.voteCounting(id));
+    public ResponseEntity<VotingCountingResponseDto> getSessionVotes(@PathVariable String session_id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.voteCounting(session_id));
     }
 }
