@@ -34,7 +34,7 @@ Basically what you should do, now is open AgendaApplication.java and  then execu
 
 #### How to test
 ##### 2 - Documentation | Test endpoints
-Access Swagger(http://localhost:8080/swagger-ui.html) to test th endpoints
+Access Swagger(http://localhost:8080/swagger-ui/index.html) to test th endpoints
 ##### The application was divided into 4:
 - Associates: registering a member is necessary to send the name, valid CPF and date of birth (/associate | POST)
 
